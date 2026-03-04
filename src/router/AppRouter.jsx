@@ -11,10 +11,10 @@ function AppRouter() {
   return (
     <Routes>
 
-      {/* Login Page */}
+      {/* Login page */}
       <Route path="/login" element={<LoginPage />} />
 
-      {/* Everything else requires login */}
+      {/* Everything else protected */}
       <Route
         path="/*"
         element={
