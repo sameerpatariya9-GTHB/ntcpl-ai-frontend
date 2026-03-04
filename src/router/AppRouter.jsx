@@ -11,12 +11,12 @@ function AppRouter() {
   return (
     <Routes>
 
-      {/* Login page */}
+      {/* Public login */}
       <Route path="/login" element={<LoginPage />} />
 
-      {/* Everything else protected */}
+      {/* Protected routes */}
       <Route
-        path="/*"
+        path="/"
         element={
           <ProtectedRoute>
             <MainLayout />
@@ -24,8 +24,28 @@ function AppRouter() {
         }
       >
         <Route index element={<HomePage />} />
-        <Route path="services" element={<ServicesPage />} />
-        <Route path="catalogue" element={<CataloguePage />} />
+      </Route>
+
+      <Route
+        path="/services"
+        element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<ServicesPage />} />
+      </Route>
+
+      <Route
+        path="/catalogue"
+        element={
+          <ProtectedRoute>
+            <MainLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<CataloguePage />} />
       </Route>
 
     </Routes>
