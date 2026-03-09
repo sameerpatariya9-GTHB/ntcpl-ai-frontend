@@ -28,7 +28,7 @@ export default function LoginPage() {
 
     try {
       await requestOTP(email);
-      alert("OTP sent. Please check your email.");
+      alert("OTP generated. Check with admin or logs for now.");
       setStep(2);
     } catch (err) {
       alert("Failed to send OTP");
@@ -36,15 +36,30 @@ export default function LoginPage() {
   };
 
   const handleVerifyOTP = async () => {
+
     try {
+
       const data = await verifyOTP(email, otp);
 
-      localStorage.setItem("token", data.access_token);
+      // IMPORTANT FIX
+      if (data && data.access_token) {
 
-      navigate("/");
+        localStorage.setItem("token", data.access_token);
+
+        navigate("/");
+
+      } else {
+
+        alert("Invalid OTP. Please try again.");
+
+      }
+
     } catch (err) {
-      alert("Invalid OTP");
+
+      alert("Invalid OTP. Please try again.");
+
     }
+
   };
 
   return (
@@ -84,6 +99,13 @@ export default function LoginPage() {
             onClick={handleVerifyOTP}
           >
             Verify OTP
+          </button>
+
+          <button
+            className="mt-3 text-sm underline"
+            onClick={() => setStep(1)}
+          >
+            Change Email
           </button>
         </>
       )}
